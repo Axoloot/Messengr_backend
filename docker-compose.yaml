@@ -5,7 +5,7 @@ services:
     image: postgres:10.3
     restart: always
     ports:
-      - "5433:5432"
+      - "5433:5433"
     command: -p 5433
     environment:
       POSTGRES_USER: prisma
@@ -44,28 +44,28 @@ services:
     networks:
       - api
       - loki
-  loki:
-    image: grafana/loki:2.6.0
-    ports:
-      - "3101:3101"
-    command: -config.file=/etc/loki/local-config.yaml
-    networks:
-      - loki
+  # loki:
+  #   image: grafana/loki:2.6.0
+  #   ports:
+  #     - "3101:3101"
+  #   command: -config.file=/etc/loki/local-config.yaml
+  #   networks:
+  #     - loki
 
-  promtail:
-    image: grafana/promtail:2.6.0
-    volumes:
-      - /var/log:/var/log
-    command: -config.file=/etc/promtail/config.yml
-    networks:
-      - loki
+  # promtail:
+  #   image: grafana/promtail:2.6.0
+  #   volumes:
+  #     - /var/log:/var/log
+  #   command: -config.file=/etc/promtail/config.yml
+  #   networks:
+  #     - loki
 
-  grafana:
-    image: grafana/grafana:latest
-    ports:
-      - "3001:3001"
-    networks:
-      - loki
+  # grafana:
+  #   image: grafana/grafana:latest
+  #   ports:
+  #     - "3001:3001"
+  #   networks:
+  #     - loki
 
 networks:
   api:
