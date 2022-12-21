@@ -39,8 +39,8 @@ services:
       - DATABASE_PASSWORD=prisma
       - DATABASE_URL=postgresql://prisma:prisma@postgres:5433
     ports:
-      - "8002:8002"
-      - "8003:8003"
+      - "8002:8000"
+      - "8003:8001"
     networks:
       - api
       - loki
