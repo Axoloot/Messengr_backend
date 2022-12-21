@@ -15,8 +15,8 @@ import errorMiddleware from './middlewares/error';
 import sessionMiddleware from './middlewares/redis';
 import { notFoundMiddleware } from './middlewares/notFound';
 
-const port = '8001';
-const httpsPort = '8002';
+const port = '8002';
+const httpsPort = '8003';
 
 const app = express();
 

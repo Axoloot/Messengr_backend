@@ -6,6 +6,7 @@ services:
     restart: always
     ports:
       - "5433:5432"
+    command: -p 5433
     environment:
       POSTGRES_USER: prisma
       POSTGRES_PASSWORD: prisma
@@ -17,9 +18,11 @@ services:
     restart: always
     environment:
       - REDIS_PASSWORD=12345678
-      - REDIS_PORT=6379
+      - REDIS_PORT=6380
     ports:
-      - "6380:6379"
+      - "6380:6380"
+    expose:
+      - "6380"
     networks:
       - api
 
@@ -29,15 +32,15 @@ services:
     entrypoint: npm run start:dev
     environment:
       - REDIS_HOST=redis
-      - PORT=8001
+      - PORT=8002
       - DATABASE_PORT=5433
       - DATABASE_USER=prisma
       - DATABASE_HOST=postgres
       - DATABASE_PASSWORD=prisma
-      - DATABASE_URL=postgresql://prisma:prisma@postgres:5432
+      - DATABASE_URL=postgresql://prisma:prisma@postgres:5433
     ports:
       - "8002:8002"
-      - "8001:8001"
+      - "8003:8003"
     networks:
       - api
       - loki
