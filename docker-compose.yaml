@@ -1,0 +1,69 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres:10.3
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: prisma
+      POSTGRES_PASSWORD: prisma
+    networks:
+      - api
+
+  redis:
+    image: bitnami/redis:latest
+    restart: always
+    environment:
+      - REDIS_PASSWORD=12345678
+      - REDIS_PORT=6379
+    ports:
+      - "6379:6379"
+    networks:
+      - api
+
+  api:
+    build:
+      context: .
+    entrypoint: npm run start:dev
+    environment:
+      - REDIS_HOST=redis
+      - PORT=8000
+      - DATABASE_PORT=5432
+      - DATABASE_USER=prisma
+      - DATABASE_HOST=postgres
+      - DATABASE_PASSWORD=prisma
+      - DATABASE_URL=postgresql://prisma:prisma@postgres:5432
+    ports:
+      - "8001:8001"
+      - "8000:8000"
+    networks:
+      - api
+      - loki
+  loki:
+    image: grafana/loki:2.6.0
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - loki
+
+  promtail:
+    image: grafana/promtail:2.6.0
+    volumes:
+      - /var/log:/var/log
+    command: -config.file=/etc/promtail/config.yml
+    networks:
+      - loki
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    networks:
+      - loki
+
+networks:
+  api:
+  loki:

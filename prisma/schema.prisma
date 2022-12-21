@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                      String        @id @default(cuid())
+  email                   String        @unique(map: "User.email_unique")
+  password                String
+  lastname                String
+  firstname               String
+  updatedAt               DateTime      @updatedAt
+  createdAt               DateTime      @default(now())
+  profilePicture          String        @default("")
+  darkMode                Boolean       @default(true)
+  passwordResetToken      String?
+  type                    UserType
+
+  messages                Message[]
+  conversations           Conversation[]
+}
+
+model Conversation {
+  id                      String   @id @default(cuid())
+  userId                  String
+  Users                   User[]
+  messages                Message[]
+}
+
+model Message {
+  id                      String       @id @default(cuid())
+  updatedAt               DateTime      @updatedAt
+  createdAt               DateTime      @default(now())
+  userId                  String
+  conversationId          String
+  Conversation            Conversation @relation(fields: [conversationId], references: [id])
+  User                    User  @relation(fields: [userId], references: [id])
+  content                 String
+}
+
+enum UserType {
+  USER
+  ADMIN
+}

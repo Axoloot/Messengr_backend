@@ -1,0 +1,31 @@
+name: deploy
+
+on:
+  push:
+    branches:
+      - production
+
+jobs:
+  build:
+    name: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Digital ocean VPN
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: root
+          key: ${{ secrets.SECRET }}
+          port: 22
+          script: |
+            docker kill jessie_api_1
+            docker rm jessie_api_1
+            docker rmi jessie_api
+            cd Jessie
+            git stash
+            git checkout production
+
+            git pull
+
+            npm run db:up
+            docker-compose up -d --build api
