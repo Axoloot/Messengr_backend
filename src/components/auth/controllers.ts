@@ -9,7 +9,7 @@ import { UserType } from '@prisma/client';
 import { userSelection } from '../users/entities';
 import { SigninUserBody, CreateUserBody } from './entities';
 import { sendConfirmEmail, sendForgotPasswordEmail } from '../../services/mailer';
-import { doesUserExist, getUser, createProfilePicture } from '../users/controllers';
+import { doesUserExist, getUser, createProfilePicture, getMe } from '../users/controllers';
 
 export async function signup(data: CreateUserBody) {
   const userExists = await doesUserExist({ email: data.email });
@@ -61,7 +61,7 @@ export async function signin({ password, email }: SigninUserBody) {
     throw ErrorRo(StatusCodes.UNPROCESSABLE_ENTITY, 'invalid password given', 'invalid-password');
   }
 
-  return getUser({ id: user.id });
+  return getMe({ id: user.id });
 }
 
 export function signout(req: Express.Request) {

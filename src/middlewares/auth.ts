@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
 import { ErrorRo } from '../error';
-import { doesUserExist, getUser } from '../components/users/controllers';
+import { doesUserExist, getMe } from '../components/users/controllers';
 import { signout } from '../components/auth/controllers';
 
 declare module 'express-session' {
@@ -22,7 +22,7 @@ export default async function authMiddleware(req: Request, res: Response, next: 
       return next(err);
     }
 
-    const user = await getUser({ id: userId });
+    const user = await getMe({ id: userId });
     res.locals.user = user;
 
     if (!user) {

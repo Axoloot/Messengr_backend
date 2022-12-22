@@ -75,10 +75,12 @@ export async function getAllUsers() {
   return users;
 }
 
-export async function getUser(body: GetUser) {
+export async function getUser(who: string) {
+  const [firstname, lastname] = who.split(':');
   const user = await database.user.findMany({
     where: {
-      ...body
+      firstname,
+      lastname
     },
     select: userSelection,
   });

@@ -43,7 +43,7 @@ services:
       - "8003:8001"
     networks:
       - api
-      - loki
+      # - loki
   # loki:
   #   image: grafana/loki:2.6.0
   #   ports:
@@ -69,4 +69,4 @@ services:
 
 networks:
   api:
-  loki:
+  # loki:
