@@ -76,7 +76,7 @@ export async function getAllUsers() {
 }
 
 export async function getUser(body: GetUser) {
-  const user = await database.user.findUnique({
+  const user = await database.user.findMany({
     where: {
       ...body
     },
