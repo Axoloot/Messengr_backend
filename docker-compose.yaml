@@ -18,11 +18,9 @@ services:
     restart: always
     environment:
       - REDIS_PASSWORD=12345678
-      - REDIS_PORT=6380
+      - REDIS_PORT=6379
     ports:
-      - "6380:6380"
-    expose:
-      - "6380"
+      - "6380:6379"
     networks:
       - api
 
