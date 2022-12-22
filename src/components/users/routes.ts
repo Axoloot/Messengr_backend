@@ -31,12 +31,12 @@ router.get('/', asyncHandler(async (_req: any, res: any) => {
 
 /**
  * Retrieve logged user data
- * @name GET /me
+ * @name GET /
  * @function
  * @memberof module:users
  * @inner
  */
-router.get('/me', asyncHandler(async (_req: any, res: any) => {
+router.get('/', asyncHandler(async (_req: any, res: any) => {
   const user = await getAllUsers();
   return res.send(user);
 }));
