@@ -30,11 +30,14 @@ router.get('/', asyncHandler(async (_req: any, res: any) => {
 }));
 
 /**
- * Retrieve logged user data
+ * Retrieve all users
  * @name GET /
  * @function
  * @memberof module:users
  * @inner
+ * @param {string} email - email (optional)
+ * @param {string} firstname - firstname
+ * @param {string} lastname - lastname
  */
 router.get('/', asyncHandler(async (_req: any, res: any) => {
   const user = await getAllUsers();
