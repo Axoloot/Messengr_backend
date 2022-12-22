@@ -24,8 +24,8 @@ router.use(authMiddleware);
  * @memberof module:users
  * @inner
  */
-router.get('/', asyncHandler(async (_req: any, res: any) => {
-  const user = await getUser(_req.body);
+router.get('/:who', asyncHandler(async (_req: any, res: any) => {
+  const user = await getUser(_req.params.who);
   return res.send(user);
 }));
 

@@ -86,7 +86,7 @@ export async function getUser(who: string) {
   });
 
   if (user === null) {
-    throw ErrorRo(StatusCodes.NOT_FOUND, `user ${JSON.stringify(body)} not found`, 'user-not-found');
+    throw ErrorRo(StatusCodes.NOT_FOUND, `user ${JSON.stringify(who)} not found`, 'user-not-found');
   }
 
   return user;
