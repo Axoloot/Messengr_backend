@@ -5,7 +5,7 @@ import { createCanvas } from 'canvas';
 
 import database from '../../database';
 import { ErrorRo } from '../../error';
-import { userSelection, ModifyUser } from './entities';
+import { userSelection, ModifyUser, GetUser } from './entities';
 
 export function createProfilePicture(firstname: string, lastname: string) {
   const l1 = firstname[0];
@@ -43,7 +43,7 @@ export async function modifyProfilePicture(userId: string, picture: Buffer) {
 
 export async function doesUserExist(where: Prisma.UserWhereUniqueInput) {
   try {
-    await getUser(where);
+    await getMe(where);
     return true;
   } catch (error) {
     return false;
@@ -63,7 +63,35 @@ export async function deleteUser(id: string) {
   });
 }
 
-export async function getUser(where: Prisma.UserWhereUniqueInput) {
+export async function getAllUsers() {
+  const users = await database.user.findMany({
+    select: userSelection,
+  });
+
+  if (users === null) {
+    throw ErrorRo(StatusCodes.NOT_FOUND, 'users not found', 'user-not-found');
+  }
+
+  return users;
+}
+
+export async function getUser(body: GetUser) {
+  const user = await database.user.findUnique({
+    where: {
+      ...body
+    },
+    select: userSelection,
+  });
+
+  if (user === null) {
+    throw ErrorRo(StatusCodes.NOT_FOUND, `user ${JSON.stringify(body)} not found`, 'user-not-found');
+  }
+
+  return user;
+}
+
+
+export async function getMe(where: Prisma.UserWhereUniqueInput) {
   const user = await database.user.findUnique({
     where,
     select: userSelection,

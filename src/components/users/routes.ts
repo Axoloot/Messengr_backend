@@ -8,7 +8,7 @@ import asyncHandler from 'express-async-handler';
 
 import authMiddleware from '../../middlewares/auth';
 import {
-  deleteUser, getUser, modifyUser, modifyProfilePicture,
+  deleteUser, getUser, modifyUser, modifyProfilePicture, getAllUsers, getMe,
 } from './controllers';
 import { bodyMiddleware } from '../../middlewares/validator';
 import { ModifyProfilePictureBody, ModifyUser } from './entities';
@@ -18,6 +18,18 @@ const router = express.Router();
 router.use(authMiddleware);
 
 /**
+ * Retrieve one users
+ * @name GET /
+ * @function
+ * @memberof module:users
+ * @inner
+ */
+router.get('/', asyncHandler(async (_req: any, res: any) => {
+  const user = await getUser(_req.body);
+  return res.send(user);
+}));
+
+/**
  * Retrieve logged user data
  * @name GET /me
  * @function
@@ -25,7 +37,19 @@ router.use(authMiddleware);
  * @inner
  */
 router.get('/me', asyncHandler(async (_req: any, res: any) => {
-  const user = await getUser({ id: res.locals.user.id });
+  const user = await getAllUsers();
+  return res.send(user);
+}));
+
+/**
+ * Retrieve logged user data
+ * @name GET /me
+ * @function
+ * @memberof module:users
+ * @inner
+ */
+router.get('/me', asyncHandler(async (_req: any, res: any) => {
+  const user = await getMe({ id: res.locals.user.id });
   return res.send(user);
 }));
 

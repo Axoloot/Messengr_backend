@@ -8,6 +8,18 @@ import {
   MaxLength,
 } from 'class-validator';
 
+export class GetUser {
+  @IsEmail()
+  @IsOptional()
+  email: string;
+
+  @IsString()
+  firstname: string;
+
+  @IsString()
+  lastname: string;
+}
+
 export class ModifyUser {
   @IsEmail()
   @IsOptional()
