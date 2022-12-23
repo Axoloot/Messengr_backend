@@ -14,9 +14,10 @@ import { connectToDatabase } from './database';
 import errorMiddleware from './middlewares/error';
 import sessionMiddleware from './middlewares/redis';
 import { notFoundMiddleware } from './middlewares/notFound';
+import socketIo from './socketio';
 
-const port = '8002';
-const httpsPort = '8003';
+const port = '8000';
+const httpsPort = '8001';
 
 const app = express();
 
@@ -31,9 +32,6 @@ app.get('/metrics', async (_req: any, res: any) => {
   }
 });
 
-// const privateKey = fs.readFileSync('./https/privkey.pem', 'utf8');
-// const certificate = fs.readFileSync('./https/fullchain.pem', 'utf8');
-// const credentials = { key: privateKey, cert: certificate };
 
 app.set('trust proxy', true);
 
@@ -66,16 +64,32 @@ app.use(routes);
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
 
-connectToDatabase().then(() => {
-  const httpServer = http.createServer(app);
-  // const httpsServer = https.createServer(credentials, app);
+const httpsInit = () => {
+  const privateKey = fs.readFileSync('./https/privkey.pem', 'utf8');
+  const certificate = fs.readFileSync('./https/fullchain.pem', 'utf8');
+  const credentials = { key: privateKey, cert: certificate };
 
-  // httpsServer.listen(httpsPort, () => {
-  //   logger.info(`server is listening on port ${httpsPort}`);
-  // });
+  const httpsServer = https.createServer(credentials, app);
+  socketIo(httpsServer);
+
+  httpsServer.listen(httpsPort, () => {
+    logger.info(`server is listening on port ${httpsPort}`);
+  });
+
+}
+
+const httpInit = () => {
+  const httpServer = http.createServer(app);
+  socketIo(httpServer);
+
   httpServer.listen(port, () => {
     logger.info(`server is listening on port ${port}`);
   });
+}
+
+connectToDatabase().then(() => {
+  httpInit();
+  // if (process.env.ENVIRONNEMENT !== 'DEV') httpsInit();
 }).catch(() => {
   process.exit(1);
 });
