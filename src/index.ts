@@ -50,6 +50,7 @@ app.use(cors({
     } else {
       // callback(new Error('Not allowed by CORS'))
       // SI PB DE CORS: COMMENTER AU DESSUS ET DECOMMENTER EN DESSOUS
+      logger.error(`cors refused ${origin}`);
       callback(null, true)
     }
   },

@@ -1,14 +1,19 @@
 import { Server } from 'socket.io';
 import { Server as httpServer } from 'http';
 import { Server as httpsServer } from 'https';
+import logger from './logger';
 
 const socketIo = (app: httpServer | httpsServer) => {
-  const io = new Server(app);
+  const io = new Server(app, {
+    path: '/socket.io/',
+  });
   const users: Record<string, string[]> = {};
+  logger.info('socket init')
 
   io.on('connection', (socket) => {
-
-    const uid = socket.handshake.query.userId; // GET USER ID
+    logger.info('test')
+    // const uid = socket.handshake.query.userId; // GET USER ID
+    const uid = ''
     let userId: string;
 
     if (uid.length && uid[0]) userId = uid[0];
@@ -37,7 +42,17 @@ const socketIo = (app: httpServer | httpsServer) => {
 
       socket.disconnect(); // DISCONNECT SOCKET
     });
+
+    io.on('connect_error', (err) => {
+      console.log(`connect_error due to ${err.message}`);
+    });
+
+    io.on('message', (socket) => {
+      console.log(users);
+    })
+
   });
+
 }
 
 export default socketIo;
