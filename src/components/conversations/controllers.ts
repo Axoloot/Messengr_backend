@@ -8,7 +8,13 @@ export async function getConversations(userId: string) {
   const user = await database.user.findUnique({
     where: { id: userId },
     select: {
-      conversations: true
+      conversations: {
+        select: {
+          messages: true,
+          Users: true,
+          id: true,
+        },
+      },
     },
   });
 
