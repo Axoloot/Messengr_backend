@@ -27,8 +27,8 @@ model User {
 model Conversation {
   id                      String   @id @default(cuid())
   userId                  String
-  name                    String
-  picture                 String
+  name                    String?
+  picture                 String?
   Users                   User[]
   messages                Message[]
 }
