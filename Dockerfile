@@ -4,6 +4,6 @@ WORKDIR /app
 COPY . .
 
 # Install packages from package-lock.json to preserve integrity
-RUN npm i
+RUN yarn
 
-CMD [ "npm", "run", "start:dev" ]
+CMD [ "yarn", "start:dev" ]

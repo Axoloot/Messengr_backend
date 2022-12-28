@@ -27,7 +27,7 @@ services:
   api:
     build:
       context: .
-    entrypoint: npm run start:dev
+    entrypoint: yarn start:dev
     environment:
       - REDIS_HOST=redis
       - PORT=8002

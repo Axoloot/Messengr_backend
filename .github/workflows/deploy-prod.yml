@@ -27,5 +27,5 @@ jobs:
 
             git pull
 
-            npm run db:up
+            yarn db:up
             docker-compose up -d --build api

@@ -11,7 +11,7 @@
     "start:dev": "ts-node src/index.ts",
     "lint": "npx eslint -c .eslintrc.js ./src --ext .ts",
     "lint:fix": "npx eslint -c .eslintrc.js ./src --ext .ts --fix",
-    "db": "npm run db:gen && npm run db:up && npm run db:save",
+    "db": "yarn db:gen && yarn db:up && yarn db:save",
     "db:up": "prisma migrate dev",
     "db:gen": "prisma generate",
     "db:seed": "ts-node prisma/seed.ts",

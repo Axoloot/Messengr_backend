@@ -16,11 +16,11 @@ Now you can launch the backend
 
 - load the env (`direnv allow` if you have it)
 - `docker-compose up redis postgres`
-- `npm run db:up` initialise the database
-- `npm run db:seed` (optional) if you want to feed the databse with mocked value
-- `npm run start:dev` launch the server locally (http://localhost:8000)
+- `yarn db:up` initialise the database
+- `yarn db:seed` (optional) if you want to feed the databse with mocked value
+- `yarn start:dev` launch the server locally (http://localhost:8000)
 
-You can run `npm run docs` to generate the routes documentation then `open out/index.html` to read it
+You can run `yarn docs` to generate the routes documentation then `open out/index.html` to read it
 
 ### Technologies
 
@@ -69,7 +69,7 @@ Reminder: you can find all of our routes by opening `out/index.html` after gener
 
 We use babel-eslint, a module that offers a strict but customizable code norm, you can find the configuration in the .eslintrc.js and in the .babelrc
 
-You can run ```npm run lint:fix``` to modify your files with the good norm.
+You can run ```yarn lint:fix``` to modify your files with the good norm.
 
 ### Commit
 
@@ -148,7 +148,7 @@ We have a pipeline system allowing the server to be prodded as soon as a new com
 
 ### Tests
 
-Tests are in the `src/__tests__` it can be run with ```npm run test```
+Tests are in the `src/__tests__` it can be run with ```yarn test```
 
 
 ### Contact

@@ -14,9 +14,9 @@ jobs:
       - uses: HatsuneMiku3939/direnv-action@v1
 
       - run: docker-compose up -d postgres redis
-      - run: npm ci
-      - run: npm run db:up
+      - run: yarn
+      - run: yarn db:up
       - run: echo $DATABASE_URL
-      - run: npm start &
+      - run: yarn start &
       - run: while curl -s localhost:8000 >/dev/null; do sleep 2; done
-      - run: npm run test
+      - run: yarn test
