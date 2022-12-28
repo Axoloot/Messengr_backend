@@ -41,30 +41,15 @@ services:
       - "8003:8001"
     networks:
       - api
-      # - loki
-  # loki:
-  #   image: grafana/loki:2.6.0
-  #   ports:
-  #     - "3101:3101"
-  #   command: -config.file=/etc/loki/local-config.yaml
-  #   networks:
-  #     - loki
-
-  # promtail:
-  #   image: grafana/promtail:2.6.0
-  #   volumes:
-  #     - /var/log:/var/log
-  #   command: -config.file=/etc/promtail/config.yml
-  #   networks:
-  #     - loki
-
-  # grafana:
-  #   image: grafana/grafana:latest
-  #   ports:
-  #     - "3001:3001"
-  #   networks:
-  #     - loki
+      - loki
+  loki:
+    image: grafana/loki:2.6.0
+    ports:
+      - "3101:3101"
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - loki
 
 networks:
   api:
-  # loki:
+  loki:
