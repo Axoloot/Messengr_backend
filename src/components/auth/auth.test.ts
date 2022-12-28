@@ -6,8 +6,8 @@ import { v4 as uuidv4 } from 'uuid';
 // @ts-ignore
 import { describe, expect, test } from '@jest/globals'
 
-import router from '../routes';
-import sessionMiddleware from '../middlewares/redis';
+import router from '../../routes';
+import sessionMiddleware from '../../middlewares/redis';
 
 const app = express();
 app.use(bodyParser.json());

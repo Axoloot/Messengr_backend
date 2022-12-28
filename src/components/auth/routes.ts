@@ -24,8 +24,9 @@ const router = express.Router();
  * @param {string} password - User password
  * @param {string} firstname - User firstname
  * @param {string} lastname - User lastname
- * @param {string} type - User type (Partner | Customer)
+ * @param {string} type - User type (User | Admin)
  */
+
 router.post('/signup', bodyMiddleware(CreateUserBody), asyncHandler(async (req: any, res: any) => {
   const user = await signup(req.body);
   return res.send(user);

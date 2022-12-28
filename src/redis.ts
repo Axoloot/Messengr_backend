@@ -4,7 +4,7 @@ import logger from './logger';
 logger.info('connecting to redis ...');
 const client = redis.createClient({
   host: process.env.REDIS_HOST,
-  port: 6379,
+  port: 6380,
   password: '12345678',
 });
 

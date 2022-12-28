@@ -57,18 +57,20 @@ export async function updateConversation(conversationId: string, data: UpdateCon
   const conversation = await database.conversation.findUnique({ where: { id: conversationId }, include: { Users: true, } });
   let Users;
 
-  if (!conversation) {
-    throw new Error('Conversation not found');
-  }
+  if (data.userId) {
+    if (!conversation) {
+      throw new Error('Conversation not found');
+    }
 
-  if (conversation.Users.find((user) => user.id === data.userId))
-    Users = {
-      disconnect: { id: data.userId },
-    }
-  else
-    Users = {
-      connect: { id: data.userId }
-    }
+    if (conversation.Users.find((user) => user.id === data.userId))
+      Users = {
+        disconnect: { id: data.userId },
+      }
+    else
+      Users = {
+        connect: { id: data.userId }
+      }
+  }
   return database.conversation.update({
     where: { id: conversationId },
     data: {

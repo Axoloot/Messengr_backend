@@ -11,5 +11,14 @@ export class GetConversations {
 
 export class UpdateConversationBody {
   @IsString()
+  @IsOptional()
   userId: string;
+
+  @IsString()
+  @IsOptional()
+  name: string;
+
+  @IsString()
+  @IsOptional()
+  picture: string;
 }

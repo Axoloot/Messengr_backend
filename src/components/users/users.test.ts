@@ -5,11 +5,11 @@ import bodyParser from 'body-parser';
 import { v4 as uuidv4 } from 'uuid';
 // @ts-ignore
 import session from 'supertest-session';
-// @ts-ignore
-import { describe, expect, test, beforeAll, beforeEach } from '@jest/globals'
+import { describe, expect, test, beforeAll } from '@jest/globals'
 
-import router from '../routes';
-import sessionMiddleware from '../middlewares/redis';
+
+import router from '../../routes';
+import sessionMiddleware from '../../middlewares/redis';
 
 const app = express();
 app.use(bodyParser.json());
@@ -22,7 +22,7 @@ const password = '123456789'
 let authenticatedSession: any;
 const testSession = session(app);
 
-describe('Location', () => {
+describe('Users', () => {
   beforeAll((done) => {
     request(app)
       .post('/auth/signup')
@@ -31,7 +31,7 @@ describe('Location', () => {
         password,
         firstname: 'john',
         lastname: 'doe',
-        type: 'Partner',
+        type: 'User',
       })
       .end(() => {
         testSession.post('/auth/signin')
@@ -46,21 +46,21 @@ describe('Location', () => {
       });
   })
 
-  test('Verify a valid Location', async () => {
-    const res = await request(app)
-      .get('/location?latitude=48.9562018&longitude=2.8884657')
+  test('Get Me', async () => {
+    const res = await authenticatedSession
+      .get('/users/me')
     expect(res.statusCode).toBe(200);
   });
 
-  test('Verify an invalid Location (longitude)', async () => {
-    const res = await request(app)
-      .get('/location?latitude=48.9562018&longitude=-10100101100')
-    expect(res.statusCode).toBe(400);
+  test('Who', async () => {
+    const res = await authenticatedSession
+      .get(`/users/${authenticatedSession.id}`)
+    expect(res.statusCode).toBe(200);
   });
 
-  test('Verify an invalid Location (latitude)', async () => {
-    const res = await request(app)
-      .get('/location?latitude=-1002002020&longitude=2.8884657')
-    expect(res.statusCode).toBe(400);
+  test('All users', async () => {
+    const res = await authenticatedSession
+      .get('/users/');
+    expect(res.statusCode).toBe(200);
   });
 })

@@ -1,6 +1,5 @@
 import { Prisma } from '@prisma/client';
 import { StatusCodes } from 'http-status-codes';
-import { User } from '@prisma/client';
 import { createCanvas } from 'canvas';
 
 import database from '../../database';
