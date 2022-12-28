@@ -4,7 +4,7 @@ import LokiTransport from 'winston-loki'
 const logger = winston.createLogger({
   level: 'debug',
   transports: [new LokiTransport({
-    host: 'http://loki:3100',
+    host: 'http://loki:3101',
     labels: { app: 'fundy-beta-back' },
     json: true,
     format: winston.format.json(),
