@@ -64,6 +64,9 @@ export async function deleteUser(id: string) {
 
 export async function getAllUsers() {
   const users = await database.user.findMany({
+    where: {
+      type: 'USER',
+    },
     select: userSelection,
   });
 
