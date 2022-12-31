@@ -19,6 +19,7 @@ import socketIo from './socketio';
 const port = '8000';
 const httpsPort = '8001';
 
+app.use(express.bodyParser({limit: '50mb'}));
 const app = express();
 
 collectDefaultMetrics()
