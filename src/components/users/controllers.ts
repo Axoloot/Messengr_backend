@@ -116,7 +116,7 @@ export async function modifyUser(id: string, body: ModifyUser) {
   });
 }
 
-export async function banUser(id: string, body: ModifyUser) {
+export async function banUser(id: string, userId: string) {
   const user = await database.user.findUnique({
     where: {
       id
@@ -128,14 +128,14 @@ export async function banUser(id: string, body: ModifyUser) {
 
 
   return database.user.update({
-    where: { id },
+    where: { id: userId },
     data: {
       banned: true,
     }
   });
 }
 
-export async function unbanUser(id: string, body: ModifyUser) {
+export async function unbanUser(id: string, userId: string) {
   const user = await database.user.findUnique({
     where: {
       id
@@ -147,7 +147,7 @@ export async function unbanUser(id: string, body: ModifyUser) {
 
 
   return database.user.update({
-    where: { id },
+    where: { id: userId },
     data: {
       banned: false,
     }

@@ -93,13 +93,13 @@ router.post('/me/profile-picture', bodyMiddleware(ModifyProfilePictureBody), asy
   return res.send(user);
 }));
 
-router.post('/ban', bodyMiddleware(ModifyProfilePictureBody), asyncHandler(async (req: any, res: any) => {
-  const user = await banUser(res.locals.user.id, req.body);
+router.post('/ban/:id', asyncHandler(async (req: any, res: any) => {
+  const user = await banUser(res.locals.user.id, req.params.id);
   return res.send(user);
 }));
 
-router.post('/unban', bodyMiddleware(ModifyProfilePictureBody), asyncHandler(async (req: any, res: any) => {
-  const user = await unbanUser(res.locals.user.id, req.body);
+router.post('/unban/:id', asyncHandler(async (req: any, res: any) => {
+  const user = await unbanUser(res.locals.user.id, req.params.id);
   return res.send(user);
 }));
 // /**
