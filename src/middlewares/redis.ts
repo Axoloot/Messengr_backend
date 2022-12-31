@@ -11,7 +11,7 @@ const sessionMiddleware = expressSession({
   cookie: {
     httpOnly: true,
     secure: false,
-    sameSite: 'lax',
+    sameSite: 'none',
   },
   store: new Connector({ client: redisClient }),
 });
