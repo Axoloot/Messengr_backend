@@ -84,7 +84,7 @@ router.delete('/me', asyncHandler(async (req: any, res: any) => {
  * @inner
  * @param {string} picture - Picture
  */
-router.patch('/me/profile-picture', bodyMiddleware(ModifyProfilePictureBody), asyncHandler(async (req: any, res: any) => {
+router.post('/me/profile-picture', bodyMiddleware(ModifyProfilePictureBody), asyncHandler(async (req: any, res: any) => {
   console.log(req.body)
   console.log(req.body.picture)
   console.log(Buffer.from(req.body.picture, 'base64'))
