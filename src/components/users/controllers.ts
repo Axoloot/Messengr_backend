@@ -31,7 +31,7 @@ export function createProfilePicture(firstname: string, lastname: string) {
 }
 
 export async function modifyProfilePicture(userId: string, picture: Buffer) {
-  console.log({picture})
+  console.log({ picture })
   await database.user.update({
     where: { id: userId },
     data: {
@@ -116,7 +116,43 @@ export async function modifyUser(id: string, body: ModifyUser) {
   });
 }
 
+export async function banUser(id: string, body: ModifyUser) {
+  const user = await database.user.findUnique({
+    where: {
+      id
+    },
+    select: userSelection,
+  });
+  if (user.type !== 'ADMIN')
+    throw ErrorRo(StatusCodes.NOT_FOUND, `user ${user.id} is not admin`, 'user-not-found');
 
+
+  return database.user.update({
+    where: { id },
+    data: {
+      banned: true,
+    }
+  });
+}
+
+export async function unbanUser(id: string, body: ModifyUser) {
+  const user = await database.user.findUnique({
+    where: {
+      id
+    },
+    select: userSelection,
+  });
+  if (user.type !== 'ADMIN')
+    throw ErrorRo(StatusCodes.NOT_FOUND, `user ${user.id} is not admin`, 'user-not-found');
+
+
+  return database.user.update({
+    where: { id },
+    data: {
+      banned: false,
+    }
+  });
+}
 // export async function verifyEmail(userId: string, token: string) {
 //   if (token !== 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c') {
 //     throw new Error('Invalid token');

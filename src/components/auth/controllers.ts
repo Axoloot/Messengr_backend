@@ -55,6 +55,9 @@ export async function signin({ password, email }: SigninUserBody) {
     throw ErrorRo(StatusCodes.NOT_FOUND, 'user not found', 'user-not-found');
   }
 
+  if (!user.banned) {
+    throw ErrorRo(StatusCodes.NOT_FOUND, 'user banned', 'user-banned');
+  }
   const valid = await bcrypt.compare(password, user.password);
 
   if (!valid) {

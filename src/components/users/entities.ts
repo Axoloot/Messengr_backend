@@ -63,6 +63,7 @@ export const userSelection: Required<Prisma.UserSelect> = {
   darkMode: true,
   type: true,
   _count: true,
+  banned: true,
 };
 
 export class ModifyProfilePictureBody {
