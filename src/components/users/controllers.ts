@@ -31,6 +31,7 @@ export function createProfilePicture(firstname: string, lastname: string) {
 }
 
 export async function modifyProfilePicture(userId: string, picture: Buffer) {
+  console.log({picture})
   await database.user.update({
     where: { id: userId },
     data: {

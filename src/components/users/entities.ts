@@ -66,6 +66,5 @@ export const userSelection: Required<Prisma.UserSelect> = {
 };
 
 export class ModifyProfilePictureBody {
-  @IsString()
   picture: string;
 }
