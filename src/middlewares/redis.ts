@@ -9,8 +9,7 @@ const sessionMiddleware = expressSession({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    httpOnly: true,
-    secure: false,
+    secure: true,
     sameSite: 'none',
   },
   store: new Connector({ client: redisClient }),
