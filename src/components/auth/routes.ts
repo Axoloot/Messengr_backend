@@ -45,6 +45,7 @@ router.post('/signin', bodyMiddleware(SigninUserBody), asyncHandler(async (req: 
   const user = await signin(req.body);
   req.session.userId = user.id;
   req.session.cookie.sameSite = 'none';
+  req.session.cookie.secure = true;
   req.session.cookie.maxAge = 30 * 24 * (60 * 60 * 1000); // 30-days valid valid token
   return res.send(user);
 }));
